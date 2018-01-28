@@ -26,9 +26,17 @@ class TestScripts(unittest.TestCase):
 
         self.assertEqual(result.stdout.decode(), stdout)
 
-    def test_one_argument(self):
-        self.check(os.path.join(self.script_path, "one_argument.py"),
+    def test_one_str(self):
+        self.check(os.path.join(self.script_path, "one_str.py"),
                    "foo", "foo\n")
+
+    def test_one_int(self):
+        self.check(os.path.join(self.script_path, "one_int.py"),
+                   "2", "3\n")
+
+    def test_one_float(self):
+        self.check(os.path.join(self.script_path, "one_float.py"),
+                   "2.3", "3.3\n")
 
 if __name__ == "__main__":
     unittest.main()
