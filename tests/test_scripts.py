@@ -1,8 +1,12 @@
+import os
 import unittest
 import subprocess
 
 
 class TestScripts(unittest.TestCase):
+
+    def setUp(self):
+        self.script_path = "scripts"
 
     def check(self, script, arguments, stdout):
         result = subprocess.run(
@@ -23,7 +27,8 @@ class TestScripts(unittest.TestCase):
         self.assertEqual(result.stdout.decode(), stdout)
 
     def test_one_argument(self):
-        self.check("script_one_argument.py", "foo", "foo\n")
+        self.check(os.path.join(self.script_path, "one_argument.py"),
+                   "foo", "foo\n")
 
 if __name__ == "__main__":
     unittest.main()

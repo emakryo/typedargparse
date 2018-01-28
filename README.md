@@ -42,7 +42,7 @@ $ python setup.py develop
 ### Test
 
 ```
-$ cd tests; python -m unittest
+$ python -m unittest tests
 ```
 
 ### Uninstall
