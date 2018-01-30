@@ -11,6 +11,9 @@ def generate_parser(func):
         parser.add_argument(arg_name, type=arg_type)
     return parser
 
-def execute(func):
+def parse_args(func, args=None):
     parser = generate_parser(func)
-    func(**vars(parser.parse_args()))
+    return parser.parse_args(args)
+
+def execute(func):
+    return func(**vars(parse_args(func)))
