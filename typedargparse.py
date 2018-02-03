@@ -14,8 +14,12 @@ def generate_parser(func):
         else:
             param['type'] = str
 
-        n_positional = len(arg_names) - len(default_values)
-        if default_values and i >= n_positional:
+        if default_values:
+            n_positional = len(arg_names) - len(default_values)
+        else:
+            n_positional = len(arg_names)
+
+        if i >= n_positional:
             name = "--" + name
             param['default'] = default_values[i-n_positional]
         else:
