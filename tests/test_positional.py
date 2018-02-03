@@ -3,14 +3,16 @@ import io
 from typedargparse import parse_args
 from .utility import CaptureOutput, TestParser
 
+
 def one_str(text: str):
     pass
+
 
 def two_str(text1: str, text2: str):
     pass
 
-class TestPositional(TestParser):
 
+class TestPositional(TestParser):
     def test_one_str(self):
         self.assertParsed(one_str, 'foo', {'text': 'foo'})
 

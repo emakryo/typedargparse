@@ -3,14 +3,18 @@ import io
 from typedargparse import parse_args
 from .utility import CaptureOutput, TestParser
 
+
 def one(text: str="foo"):
     pass
+
 
 def two(text: str="foo", num: int=1):
     pass
 
+
 def two_mixed(text: str, num: int=1):
     pass
+
 
 class TestOptional(TestParser):
     def test_one(self):
@@ -50,7 +54,6 @@ class TestOptional(TestParser):
         for args in test_cases:
             with self.subTest(args=args):
                 self.assertExit(two, args)
-
 
     def test_two_mixed(self):
         test_cases = {

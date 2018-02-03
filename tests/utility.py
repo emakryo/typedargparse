@@ -3,6 +3,7 @@ import sys
 import unittest
 from typedargparse import parse_args
 
+
 class CaptureOutput:
     def __init__(self, stdout=None, stderr=None):
         self._stdout = stdout or sys.stdout
@@ -24,7 +25,6 @@ class CaptureOutput:
 
 
 class TestParser(unittest.TestCase):
-
     def assertParsed(self, func, args, expected):
         parsed = parse_args(func, args.split())
         self.assertEqual(vars(parsed), expected)

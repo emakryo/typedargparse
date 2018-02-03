@@ -1,5 +1,6 @@
 import argparse
 
+
 def generate_parser(func):
     annotations = func.__annotations__
     parser = argparse.ArgumentParser()
@@ -13,9 +14,10 @@ def generate_parser(func):
         else:
             param['type'] = str
 
-        if default_values and i >= len(arg_names) - len(default_values):
+        n_positional = len(arg_names) - len(default_values)
+        if default_values and i >= n_positional:
             name = "--" + name
-            param['default'] = default_values[i-len(arg_names)+len(default_values)]
+            param['default'] = default_values[i-n_positional]
         else:
             param['default'] = None
 
@@ -37,9 +39,11 @@ def generate_parser(func):
         parser.add_argument(name, **param)
     return parser
 
+
 def parse_args(func, args=None):
     parser = generate_parser(func)
     return parser.parse_args(args)
+
 
 def execute(func):
     return func(**vars(parse_args(func)))

@@ -1,5 +1,6 @@
 import typedargparse
 
+
 def main(num: int):
     print(num + 1)
 

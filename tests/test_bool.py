@@ -3,14 +3,18 @@ import io
 from typedargparse import parse_args
 from .utility import CaptureOutput, TestParser
 
+
 def bool_positional(flag: bool):
     pass
+
 
 def bool_true(flag: bool=True):
     pass
 
+
 def bool_false(flag: bool=False):
     pass
+
 
 class TestBool(TestParser):
     def test_bool_positional(self):
