@@ -1,3 +1,4 @@
+import collections
 import typing
 import argparse
 
@@ -61,8 +62,14 @@ def parse_params(name, annotation, optional, default):
 
 
 def is_variable_length_type(t):
+    variable_length_origins = [
+        list,
+        typing.List,
+        collections.abc.Sequence,
+        typing.Sequence,
+    ]
     return (hasattr(t, "__origin__") and
-            t.__origin__ in (typing.List, typing.Sequence))
+            t.__origin__ in variable_length_origins)
 
 
 def parse_args(func, args=None):
