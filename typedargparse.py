@@ -3,12 +3,20 @@ import argparse
 def generate_parser(func):
     annotations = func.__annotations__
     parser = argparse.ArgumentParser()
-    for arg_name in func.__code__.co_varnames:
-        if arg_name in annotations:
-            arg_type = annotations[arg_name]
+    arg_names = func.__code__.co_varnames
+    default_values = func.__defaults__
+    for i, name in enumerate(arg_names):
+        if name in annotations:
+            arg_type = annotations[name]
         else:
             arg_type = str
-        parser.add_argument(arg_name, type=arg_type)
+
+        if default_values and i >= len(arg_names) - len(default_values):
+            name = "--" + name
+            default = default_values[i-len(arg_names)+len(default_values)]
+        else:
+            default = None
+        parser.add_argument(name, type=arg_type, default=default)
     return parser
 
 def parse_args(func, args=None):
