@@ -3,18 +3,21 @@ import io
 from typedargparse import parse_args
 from .utility import CaptureOutput
 
-def one_str(text: str="foo"):
+def one(text: str="foo"):
+    pass
+
+def two(text: str="foo", num: int=1):
     pass
 
 class TestOptional(unittest.TestCase):
     def test_one(self):
         args_list = "--text bar".split()
-        args = parse_args(one_str, args_list)
+        args = parse_args(one, args_list)
         self.assertEqual(args.text, args_list[1])
 
-    def test_one_no_arg(self):
+    def test_one_with_no_arg(self):
         args_list = []
-        args = parse_args(one_str, args_list)
+        args = parse_args(one, args_list)
         self.assertEqual(args.text, "foo")
 
     def test_one_no_flag_error(self):
@@ -22,7 +25,52 @@ class TestOptional(unittest.TestCase):
         stderr = io.StringIO()
         with CaptureOutput(stderr=stderr):
             with self.assertRaises(SystemExit):
-                args = parse_args(one_str, args=args_list)
+                args = parse_args(one, args=args_list)
+
+    def test_one_unknown_flag_error(self):
+        args_list = "--num 3".split()
+        stderr = io.StringIO()
+        with CaptureOutput(stderr=stderr):
+            with self.assertRaises(SystemExit):
+                args = parse_args(one, args=args_list)
+
+    def test_two(self):
+        args_list = "--text bar --num 3".split()
+        args = parse_args(two, args_list)
+        self.assertEqual(args.text, args_list[1])
+        self.assertEqual(args.num, int(args_list[3]))
+
+    def test_two_with_first_arg(self):
+        args_list = "--text bar".split()
+        args = parse_args(two, args_list)
+        self.assertEqual(args.text, args_list[1])
+        self.assertEqual(args.num, 1)
+
+    def test_two_with_second_arg(self):
+        args_list = "--num 3".split()
+        args = parse_args(two, args_list)
+        self.assertEqual(args.text, "foo")
+        self.assertEqual(args.num, int(args_list[1]))
+
+    def test_two_with_no_arg(self):
+        args_list = []
+        args = parse_args(two, args_list)
+        self.assertEqual(args.text, "foo")
+        self.assertEqual(args.num, 1)
+
+    def test_two_no_flag_error(self):
+        args_list = ["bar"]
+        stderr = io.StringIO()
+        with CaptureOutput(stderr=stderr):
+            with self.assertRaises(SystemExit):
+                args = parse_args(one, args=args_list)
+
+    def test_two_unknown_flag_error(self):
+        args_list = ["--bar"]
+        stderr = io.StringIO()
+        with CaptureOutput(stderr=stderr):
+            with self.assertRaises(SystemExit):
+                args = parse_args(one, args=args_list)
 
 if __name__ == "__main__":
     unittest.main()
