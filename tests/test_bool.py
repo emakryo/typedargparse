@@ -1,7 +1,7 @@
 import unittest
 import io
 from typedargparse import parse_args
-from .utility import CaptureOutput
+from .utility import CaptureOutput, TestParser
 
 def bool_positional(flag: bool):
     pass
@@ -12,36 +12,33 @@ def bool_true(flag: bool=True):
 def bool_false(flag: bool=False):
     pass
 
-class TestBool(unittest.TestCase):
+class TestBool(TestParser):
     def test_bool_positional(self):
-        args_list = ["--flag"]
-        args = parse_args(bool_positional, args_list)
-        self.assertEqual(args.flag, True)
-
-    def test_bool_positional_no_arg(self):
-        args_list = []
-        args = parse_args(bool_positional, args_list)
-        self.assertEqual(args.flag, False)
+        test_cases = {
+            "--flag": {'flag': True},
+            "": {'flag': False},
+        }
+        for args, expected in test_cases.items():
+            with self.subTest(args=args):
+                self.assertParsed(bool_positional, args, expected)
 
     def test_true(self):
-        args_list = ["--flag"]
-        args = parse_args(bool_true, args_list)
-        self.assertEqual(args.flag, True)
-
-    def test_true_no_arg(self):
-        args_list = []
-        args = parse_args(bool_true, args_list)
-        self.assertEqual(args.flag, False)
+        test_cases = {
+            "--flag": {'flag': True},
+            "": {'flag': False},
+        }
+        for args, expected in test_cases.items():
+            with self.subTest(args=args):
+                self.assertParsed(bool_true, args, expected)
 
     def test_false(self):
-        args_list = ["--flag"]
-        args = parse_args(bool_false, args_list)
-        self.assertEqual(args.flag, False)
-
-    def test_false_no_arg(self):
-        args_list = []
-        args = parse_args(bool_false, args_list)
-        self.assertEqual(args.flag, True)
+        test_cases = {
+            "--flag": {'flag': False},
+            "": {'flag': True},
+        }
+        for args, expected in test_cases.items():
+            with self.subTest(args=args):
+                self.assertParsed(bool_false, args, expected)
 
 if __name__ == "__main__":
     unittest.main()

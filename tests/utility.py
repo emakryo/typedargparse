@@ -1,4 +1,7 @@
+import io
 import sys
+import unittest
+from typedargparse import parse_args
 
 class CaptureOutput:
     def __init__(self, stdout=None, stderr=None):
@@ -18,3 +21,16 @@ class CaptureOutput:
         sys.stderr.flush()
         sys.stdout = self.old_stdout
         sys.stderr = self.old_stderr
+
+
+class TestParser(unittest.TestCase):
+
+    def assertParsed(self, func, args, expected):
+        parsed = parse_args(func, args.split())
+        self.assertEqual(vars(parsed), expected)
+
+    def assertExit(self, func, args):
+        stderr = io.StringIO()
+        with CaptureOutput(stderr=stderr):
+            with self.assertRaises(SystemExit):
+                parse_args(func, args.split())
