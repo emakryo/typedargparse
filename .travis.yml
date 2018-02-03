@@ -9,4 +9,4 @@ python:
 
 install: pip install .
 
-script: python -m unittest tests
+script: python -m unittest
