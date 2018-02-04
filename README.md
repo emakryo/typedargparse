@@ -43,9 +43,9 @@ Arguments are converted by callable. (default: `str`)
 ### `bool`
 
 Note that `bool` annotation behave in a different way than other callable annotations.
-Boolean arguments are treated as *flag*, i.e. they do not take any optional values.
-Positional arguments annotated with `bool` is treated as
-optional arguments with default value `False`.
+Boolean arguments are treated as *flags*, i.e. they do not take any optional values.
+Positional arguments annotated with `bool` are treated as
+optional arguments with the default value `False`.
 The value is set as follows:
 
 |default value| With flag | Without flag |
