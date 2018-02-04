@@ -2,10 +2,12 @@ import collections
 import typing
 import argparse
 
+
 class TypedArgumentParser(argparse.ArgumentParser):
 
-    def __init__(self, func):
-        super(TypedArgumentParser, self).__init__()
+    def __init__(self, func, **kwargs):
+        super(TypedArgumentParser, self).__init__(**kwargs)
+
         annotations = func.__annotations__
         arg_names = func.__code__.co_varnames
         default_values = func.__defaults__
@@ -30,7 +32,6 @@ class TypedArgumentParser(argparse.ArgumentParser):
 
             self._add_typed_params(name, annotation, optional, default)
 
-
     def _add_typed_params(self, name, annotation, optional, default):
         param = {}
 
@@ -41,10 +42,10 @@ class TypedArgumentParser(argparse.ArgumentParser):
             if not optional:
                 name = "--" + name
 
-            if default == False:
-                param['action'] = 'store_false'
-            else:
+            if not optional or default is False:
                 param['action'] = 'store_true'
+            else:
+                param['action'] = 'store_false'
 
         elif _is_variable_length_type(annotation):
             param['type'] = annotation.__args__[0]

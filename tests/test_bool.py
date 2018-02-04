@@ -27,8 +27,8 @@ class TestBool(TestParser):
 
     def test_true(self):
         test_cases = {
-            "--flag": {'flag': True},
-            "": {'flag': False},
+            "--flag": {'flag': False},
+            "": {'flag': True},
         }
         for args, expected in test_cases.items():
             with self.subTest(args=args):
@@ -36,8 +36,8 @@ class TestBool(TestParser):
 
     def test_false(self):
         test_cases = {
-            "--flag": {'flag': False},
-            "": {'flag': True},
+            "--flag": {'flag': True},
+            "": {'flag': False},
         }
         for args, expected in test_cases.items():
             with self.subTest(args=args):
