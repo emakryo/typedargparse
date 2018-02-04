@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="typedargparse",
-    version="0.0.0",
+    version="0.0.1",
     description="Simple argparse wrapper with typing",
     # packages=find_packages(exclude=['tests']),
     py_modules=["typedargparse"],

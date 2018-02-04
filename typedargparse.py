@@ -3,6 +3,9 @@ import typing
 import argparse
 
 
+__version__ = '0.0.1'
+
+
 class TypedArgumentParser(argparse.ArgumentParser):
 
     def __init__(self, func, **kwargs):
