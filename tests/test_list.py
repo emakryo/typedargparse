@@ -15,6 +15,10 @@ def list_int(nums: List[int]):
     pass
 
 
+def list_pos_opt(texts: List[str], nums: List[int]=[2]):
+    pass
+
+
 class TestList(TestParser):
     def test_list_str(self):
         test_cases = {
@@ -48,6 +52,17 @@ class TestList(TestParser):
         for args, expected in test_cases.items():
             with self.subTest(args=args):
                 self.assertParsed(list_str_opt, args, expected)
+
+    def test_pos_opt(self):
+        test_cases = {
+            "foo bar --nums 1 2": {'texts': ['foo', 'bar'], 'nums': [1, 2]},
+            "--nums 1 2 -- foo bar": {'texts': ['foo', 'bar'], 'nums': [1, 2]},
+            "foo bar": {'texts': ['foo', 'bar'], 'nums': [2]},
+        }
+
+        for args, expected in test_cases.items():
+            with self.subTest(args=args):
+                self.assertParsed(list_pos_opt, args, expected)
 
 if __name__ == "__main__":
     unittest.main()

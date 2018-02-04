@@ -62,11 +62,12 @@ def parse_params(name, annotation, optional, default):
 
 
 def is_variable_length_type(t):
+    # __origin__ attributes of typing objects differ between python versions.
     variable_length_origins = [
-        list,
-        typing.List,
-        collections.abc.Sequence,
-        typing.Sequence,
+        list,                          # List     >=3.7
+        collections.abc.Sequence,      # Sequence >=3.7
+        typing.List,                   # List     <=3.6
+        typing.Sequence,               # Sequence <=3.6
     ]
     return (hasattr(t, "__origin__") and
             t.__origin__ in variable_length_origins)
