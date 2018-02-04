@@ -1,7 +1,7 @@
 # typedargparse
 
 Simple wrapper for argparse.
-This module automatically generate parser from type-annotated function.
+This module automatically generate parser from type-annotated function and execute.
 
 ## Requirements
 
@@ -9,7 +9,7 @@ This module automatically generate parser from type-annotated function.
 
 ## Example
 
-```
+```python
 # example.py
 import typing
 from typedargparse import execute
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     execute(main)
 ```
 
-This script `test.py` takes options `--text`, `--x`, `--option`.
+This script `example.py` takes an option `--mean` and an arbitrary number of arguments.
 Therefore, it is executed as follows:
 
 ```
@@ -38,7 +38,7 @@ $ python example.py --mean 2 3 4
 
 ### callable (`int`, `str`, etc.)
 
-Arguments are converted by callable. (default: str) 
+Arguments are converted by callable. (default: `str`)
 
 ### `bool`
 
