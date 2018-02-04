@@ -1,12 +1,11 @@
-import typedargparse
+import typing
+from typedargparse import execute
 
-
-def main(text: str, x: int=10, option: bool=False):
-    if option:
-        print(text)
+def main(nums: typing.List[int], mean: bool):
+    if mean:
+        print(sum(nums)/len(nums))
     else:
-        print(x + 3)
-
+        print(sum(nums))
 
 if __name__ == "__main__":
-    typedargparse.execute(main)
+    execute(main)
