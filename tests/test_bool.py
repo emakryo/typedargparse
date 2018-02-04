@@ -1,6 +1,5 @@
 import unittest
 import io
-from typedargparse import parse_args
 from .utility import CaptureOutput, TestParser
 
 

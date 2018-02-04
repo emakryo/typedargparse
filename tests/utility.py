@@ -1,7 +1,7 @@
 import io
 import sys
 import unittest
-from typedargparse import parse_args
+from typedargparse import TypedArgumentParser as Parser
 
 
 class CaptureOutput:
@@ -26,11 +26,11 @@ class CaptureOutput:
 
 class TestParser(unittest.TestCase):
     def assertParsed(self, func, args, expected):
-        parsed = parse_args(func, args.split())
+        parsed = Parser(func).parse_args(args.split())
         self.assertEqual(vars(parsed), expected)
 
     def assertExit(self, func, args):
         stderr = io.StringIO()
         with CaptureOutput(stderr=stderr):
             with self.assertRaises(SystemExit):
-                parse_args(func, args.split())
+                Parser(func).parse_args(args.split())
