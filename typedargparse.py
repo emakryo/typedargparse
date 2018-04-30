@@ -3,10 +3,11 @@ import typing
 import argparse
 
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 
 class TypedArgumentParser(argparse.ArgumentParser):
+    """This class analyze funcion arguments and their type annotations"""
 
     def __init__(self, func, **kwargs):
         super(TypedArgumentParser, self).__init__(**kwargs)
@@ -76,4 +77,5 @@ def _is_variable_length_type(t):
 
 
 def execute(func):
+    """Execute type annotated function"""
     return func(**vars(TypedArgumentParser(func).parse_args()))

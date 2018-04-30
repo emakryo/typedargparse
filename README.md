@@ -1,5 +1,7 @@
 # typedargparse
 
+[![Build Status](https://travis-ci.org/emakryo/typedargparse.svg?branch=master)](https://travis-ci.org/emakryo/typedargparse)
+
 Simple wrapper for argparse.
 This module automatically generate parser from type-annotated function and execute.
 
