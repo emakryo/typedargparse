@@ -1,3 +1,4 @@
+import inspect
 import collections
 import typing
 import argparse
@@ -12,27 +13,20 @@ class TypedArgumentParser(argparse.ArgumentParser):
     def __init__(self, func, **kwargs):
         super(TypedArgumentParser, self).__init__(**kwargs)
 
-        annotations = func.__annotations__
-        arg_names = func.__code__.co_varnames
-        default_values = func.__defaults__
+        sig = inspect.signature(func)
 
-        if default_values:
-            n_positional = len(arg_names) - len(default_values)
-        else:
-            n_positional = len(arg_names)
-
-        for i, name in enumerate(arg_names):
-            if name in annotations:
-                annotation = annotations[name]
-            else:
+        for name, param in sig.parameters.items():
+            if param.annotation is param.empty:
                 annotation = str
-
-            if i >= n_positional:
-                optional = True
-                default = default_values[i-n_positional]
             else:
+                annotation = param.annotation 
+
+            if param.default is param.empty:
                 optional = False
                 default = None
+            else:
+                optional = True
+                default = param.default
 
             self._add_typed_params(name, annotation, optional, default)
 
